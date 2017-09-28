@@ -25,7 +25,7 @@
 
 #include <cute.h>
 
-#include "ulex/tok.h"
+#include "ulex/lexer.h"
 
 CUTEST_DATA {
   i32_t dummy;
@@ -37,7 +37,10 @@ CUTEST_TEARDOWN {};
 i32_t
 main(void) {
   CUTEST_DATA test = {0};
-
   (void)test;
+
+  printf("%zu\n", sizeof(lex_tok_t));
+  printf("%zu\n", sizeof(lex_val_t));
+  printf("%zu\n", sizeof(dstr16_t));
   return EXIT_SUCCESS;
 }

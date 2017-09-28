@@ -13,6 +13,9 @@ endif ()
 set(CMAKE_MODULE_PATH "${CMAKE_CACHEFILE_DIR}/cmake")
 include(ProjectDependency)
 
+set(CMAKE_C_STANDARD 99)
+set(BUILD_SHARED_LIBS OFF)
+
 project(ulex C)
 project_dependency(ufs GIT_REPOSITORY https://github.com/uael/ufs.git)
 project_dependency(uev GIT_REPOSITORY https://github.com/uael/uev.git)
@@ -28,6 +31,19 @@ set(ulex_HDR ${ulex_INC_DIR}/ulex.h)
 add_library(ulex ${ulex_SRCS} ${ulex_HDRS} ${ulex_HDR})
 target_include_directories(ulex PUBLIC ${ulex_INC_DIR})
 target_link_libraries(ulex PUBLIC ufs uev)
+
+if (MSVC)
+  target_compile_options(ulex
+    PRIVATE /MT$<$<CONFIG:Debug>:d> /Oy
+    PRIVATE /O$<$<CONFIG:Debug>:d>$<$<CONFIG:Release>:x>)
+  set_target_properties(ulex
+    PROPERTIES LINK_FLAGS /nodefaultlib:msvcrt.lib)
+else ()
+  target_compile_options(ulex
+    PRIVATE -Wall -Werror -Wextra -fomit-frame-pointer
+    PRIVATE -Wno-missing-field-initializers
+    PRIVATE -O$<$<CONFIG:Debug>:0 -g3>$<$<CONFIG:Release>:3>)
+endif ()
 
 get_directory_property(ulex_PARENT PARENT_DIRECTORY)
 if (NOT ${ulex_PARENT})

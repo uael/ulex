@@ -23,19 +23,21 @@
  * SOFTWARE.
  */
 
-/*!@file ulex/const/str.h
+/*!@file ulex/src.h
  * @author uael
  */
-#ifndef __ULEX_CONST_STR_H
-# define __ULEX_CONST_STR_H
+#ifndef __ULEX_SRC_H
+# define __ULEX_SRC_H
 
-#include <uty.h>
+#include <ufs/stream.h>
 
-typedef struct lex_cstr lex_cstr_t;
+#include "loc.h"
 
-struct lex_cstr {
-  u64_t len;
-  i8_t const *buf;
+typedef struct lex_src lex_src_t;
+
+struct lex_src {
+  fs_stream_t stream;
+  lex_loc_t cursor;
 };
 
-#endif /* !__ULEX_CONST_STR_H */
+#endif /* !__ULEX_SRC_H */

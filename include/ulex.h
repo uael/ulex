@@ -29,9 +29,10 @@
 #ifndef __ULEX_H
 # define __ULEX_H
 
-#include <ufs.h>
-#include <uev.h>
-
+#include "ulex/lexer.h"
+#include "ulex/loc.h"
+#include "ulex/src.h"
 #include "ulex/tok.h"
+#include "ulex/val.h"
 
 #endif /* !__ULEX_H */

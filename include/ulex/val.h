@@ -23,26 +23,47 @@
  * SOFTWARE.
  */
 
-/*!@file ulex/const/kind.h
+/*!@file ulex/val.h
  * @author uael
  */
-#ifndef __ULEX_CONST_KIND_H
-# define __ULEX_CONST_KIND_H
+#ifndef __ULEX_VAL_H
+# define __ULEX_VAL_H
 
-enum lex_const_kind {
-  LEX_CONST_I8,
-  LEX_CONST_I16,
-  LEX_CONST_I32,
-  LEX_CONST_I64,
-  LEX_CONST_U8,
-  LEX_CONST_U16,
-  LEX_CONST_U32,
-  LEX_CONST_U64,
-  LEX_CONST_F32,
-  LEX_CONST_F64,
-  LEX_CONST_STR,
+#include <uds/dstr.h>
+
+enum lex_val_kind {
+  LEX_VAL_NULL,
+  LEX_VAL_STR,
+  LEX_VAL_I8,
+  LEX_VAL_I16,
+  LEX_VAL_I32,
+  LEX_VAL_I64,
+  LEX_VAL_U8,
+  LEX_VAL_U16,
+  LEX_VAL_U32,
+  LEX_VAL_U64,
+  LEX_VAL_F32,
+  LEX_VAL_F64
 };
 
-typedef enum lex_const_kind lex_const_kind_t;
+typedef enum lex_val_kind lex_val_kind_t;
+typedef struct lex_val lex_val_t;
 
-#endif /* !__ULEX_CONST_KIND_H */
+struct lex_val {
+  lex_val_kind_t kind;
+  union {
+    dstr64_t str;
+    i8_t i8;
+    i16_t i16;
+    i32_t i32;
+    i64_t i64;
+    u8_t u8;
+    u16_t u16;
+    u32_t u32;
+    u64_t u64;
+    f32_t f32;
+    f64_t f64;
+  };
+};
+
+#endif /* !__ULEX_VAL_H */

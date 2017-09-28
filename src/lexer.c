@@ -23,32 +23,64 @@
  * SOFTWARE.
  */
 
-/*!@file ulex/const.h
- * @author uael
- */
-#ifndef __ULEX_CONST_H
-# define __ULEX_CONST_H
+#include "ulex/lexer.h"
 
-#include "const/kind.h"
-#include "const/str.h"
+void
+lex_lexer_ctor(lex_lexer_t *self, lex_src_t src) {
+  *self = init (lex_lexer_t, .src = src);
+}
 
-typedef struct lex_const lex_const_t;
+void
+lex_lexer_dtor(lex_lexer_t *self) {
+  lex_lexer_detach(self);
+  err_stack_dtor(&self->errs);
+  lex_toks_dtor(&self->toks);
+  lex_vals_dtor(&self->vals);
+}
 
-struct lex_const {
-  lex_const_kind_t kind : 1;
-  union {
-    i8_t i8;
-    i16_t i16;
-    i32_t i32;
-    i64_t i64;
-    u8_t u8;
-    u16_t u16;
-    u32_t u32;
-    u64_t u64;
-    f32_t f32;
-    f64_t f64;
-    lex_cstr_t str;
-  };
-};
+ret_t
+lex_lexer_push_file(lex_lexer_t *self, i8_t const *filename) {
+  return RET_SUCCESS;
+}
 
-#endif /* !__ULEX_CONST_H */
+ret_t
+lex_lexer_push_buf(lex_lexer_t *self, i8_t const *buf, u64_t len) {
+  return RET_SUCCESS;
+}
+
+ret_t
+lex_lexer_fork(lex_lexer_t *fork, lex_lexer_t *origin) {
+  fork->origin = origin;
+
+  return RET_SUCCESS;
+}
+
+ret_t
+lex_lexer_join(lex_lexer_t *fork) {
+  return RET_SUCCESS;
+}
+
+ret_t
+lex_lexer_push(lex_lexer_t *self, lex_tok_t tok) {
+  return RET_SUCCESS;
+}
+
+lex_tok_t
+lex_lexer_peek(lex_lexer_t *self) {
+  return init (lex_tok_t, 0);
+}
+
+lex_tok_t
+lex_lexer_npeek(lex_lexer_t *self, u16_t n) {
+  return init (lex_tok_t, 0);
+}
+
+lex_tok_t
+lex_lexer_next(lex_lexer_t *self) {
+  return init (lex_tok_t, 0);
+}
+
+lex_tok_t
+lex_lexer_consume(lex_lexer_t *self, u32_t kind) {
+  return init (lex_tok_t, 0);
+}

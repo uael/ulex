@@ -23,4 +23,20 @@
  * SOFTWARE.
  */
 
-#include "ulex/tok.h"
+/*!@file ulex/loc.h
+ * @author uael
+ */
+#ifndef __ULEX_LOC_H
+# define __ULEX_LOC_H
+
+#include <uty.h>
+
+typedef struct lex_loc lex_loc_t;
+
+struct lex_loc {
+  u16_t lexer;
+  u32_t line, col;
+  u64_t cursor;
+};
+
+#endif /* !__ULEX_LOC_H */
