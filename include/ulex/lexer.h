@@ -47,56 +47,47 @@ DEQ16_DEFINE(lex_srcs, lex_src_t, addrcmp);
 
 struct lex_lexer {
   bool_t root;
-
-  /*!@brief A fork does not inherit observers, errs and sources from its origin.
-   * Forking a lexer permit to lex tokens in a reductive and revertible context
-   * like applying pre-processing in C.
-   */
-  union {
-    struct {
-      observers_t observers;
-      err_stack_t errs;
-      lex_srcs_t srcs;
-    };
-    lex_lexer_t *origin;
-  };
+  observers_t observers;
+  err_stack_t errs;
+  lex_srcs_t srcs;
+  lex_lexer_t *origin;
   lex_toks_t toks;
   lex_vals_t vals;
 };
 
 OBSERVABLE_DEFINE(lex_lexer, lex_lexer_t, lex_lexer_ev_t);
 
-__export__ void
+__api__ void
 lex_lexer_ctor(lex_lexer_t *self);
 
-__export__ void
+__api__ void
 lex_lexer_dtor(lex_lexer_t *self);
 
-__export__ ret_t
-lex_lexer_push_file(lex_lexer_t *self, i8_t const *filename);
+__api__ ret_t
+lex_lexer_push_file(lex_lexer_t *self, i8_t __const *filename);
 
-__export__ ret_t
-lex_lexer_push_buf(lex_lexer_t *self, i8_t const *buf, u64_t len);
+__api__ ret_t
+lex_lexer_push_buf(lex_lexer_t *self, i8_t __const *buf, u64_t len);
 
-__export__ ret_t
+__api__ ret_t
 lex_lexer_fork(lex_lexer_t *fork, lex_lexer_t *origin);
 
-__export__ ret_t
+__api__ ret_t
 lex_lexer_join(lex_lexer_t *fork);
 
-__export__ ret_t
+__api__ ret_t
 lex_lexer_push(lex_lexer_t *self, lex_tok_t tok);
 
-__export__ lex_tok_t
+__api__ lex_tok_t
 lex_lexer_peek(lex_lexer_t *self);
 
-__export__ lex_tok_t
+__api__ lex_tok_t
 lex_lexer_npeek(lex_lexer_t *self, u16_t n);
 
-__export__ lex_tok_t
+__api__ lex_tok_t
 lex_lexer_next(lex_lexer_t *self);
 
-__export__ lex_tok_t
+__api__ lex_tok_t
 lex_lexer_consume(lex_lexer_t *self, u32_t kind);
 
 #endif /* !__ULEX_VAL_H */

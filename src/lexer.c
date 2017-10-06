@@ -26,8 +26,8 @@
 #include "ulex/lexer.h"
 
 void
-lex_lexer_ctor(lex_lexer_t *self, lex_src_t src) {
-  *self = init (lex_lexer_t, .src = src);
+lex_lexer_ctor(lex_lexer_t *self) {
+  *self = init (lex_lexer_t, true);
 }
 
 void
@@ -39,12 +39,12 @@ lex_lexer_dtor(lex_lexer_t *self) {
 }
 
 ret_t
-lex_lexer_push_file(lex_lexer_t *self, i8_t const *filename) {
+lex_lexer_push_file(lex_lexer_t *self, i8_t __const *filename) {
   return RET_SUCCESS;
 }
 
 ret_t
-lex_lexer_push_buf(lex_lexer_t *self, i8_t const *buf, u64_t len) {
+lex_lexer_push_buf(lex_lexer_t *self, i8_t __const *buf, u64_t len) {
   return RET_SUCCESS;
 }
 

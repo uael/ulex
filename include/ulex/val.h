@@ -63,7 +63,7 @@ struct lex_val {
     u64_t u64;
     f32_t f32;
     f64_t f64;
-  };
+  } val;
 };
 
 #endif /* !__ULEX_VAL_H */

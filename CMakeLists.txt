@@ -32,12 +32,15 @@ add_library(ulex ${ulex_SRCS} ${ulex_HDRS} ${ulex_HDR})
 target_include_directories(ulex PUBLIC ${ulex_INC_DIR})
 target_link_libraries(ulex PUBLIC ufs uev)
 
+set(CMAKE_C_FLAGS "")
+set(CMAKE_C_FLAGS_DEBUG "")
+set(CMAKE_C_FLAGS_RELEASE "")
+
 if (MSVC)
   target_compile_options(ulex
-    PRIVATE /MT$<$<CONFIG:Debug>:d> /Oy
-    PRIVATE /O$<$<CONFIG:Debug>:d>$<$<CONFIG:Release>:x>)
-  set_target_properties(ulex
-    PROPERTIES LINK_FLAGS /nodefaultlib:msvcrt.lib)
+    PUBLIC /MT$<$<CONFIG:Debug>:d> /Oy /Za /W3
+    PUBLIC /D_CRT_SECURE_NO_WARNINGS
+    PUBLIC /O$<$<CONFIG:Debug>:d>$<$<CONFIG:Release>:x>)
 else ()
   target_compile_options(ulex
     PRIVATE -Wall -Werror -Wextra -fomit-frame-pointer
@@ -46,12 +49,12 @@ else ()
 endif ()
 
 get_directory_property(ulex_PARENT PARENT_DIRECTORY)
-if (NOT ${ulex_PARENT})
+if (NOT ulex_PARENT)
   set(ulex_DEVEL TRUE)
-elseif (NOT ${ulex_DEVEL})
+elseif (NOT ulex_DEVEL)
   set(ulex_DEVEL FALSE)
 endif ()
-if (${ulex_DEVEL} AND EXISTS ${ulex_TEST_DIR})
+if (ulex_DEVEL AND EXISTS ${ulex_TEST_DIR})
   project_dependency(cute GIT_REPOSITORY https://github.com/uael/cute.git)
   if (NOT ulex_PARENT)
     enable_testing()
@@ -60,10 +63,10 @@ if (${ulex_DEVEL} AND EXISTS ${ulex_TEST_DIR})
   file(GLOB ulex_TEST_SRCS ${ulex_TEST_SRCS} ${ulex_TEST_DIR}/*.c)
   foreach (ulex_TEST_SRC ${ulex_TEST_SRCS})
     get_filename_component(ulex_TEST_NAME ${ulex_TEST_SRC} NAME_WE)
-    add_executable(test_${ulex_TEST_NAME} ${ulex_TEST_SRC})
-    add_dependencies(test_${ulex_TEST_NAME} ulex cute)
-    target_link_libraries(test_${ulex_TEST_NAME} ulex cute)
-    add_test(${ulex_TEST_NAME} test_${ulex_TEST_NAME})
+    add_executable(test_ulex_${ulex_TEST_NAME} ${ulex_TEST_SRC})
+    add_dependencies(test_ulex_${ulex_TEST_NAME} ulex cute)
+    target_link_libraries(test_ulex_${ulex_TEST_NAME} ulex cute)
+    add_test(${ulex_TEST_NAME} test_ulex_${ulex_TEST_NAME})
   endforeach ()
 endif ()
 

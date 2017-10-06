@@ -57,7 +57,7 @@ struct lex_tok {
   union {
     u32_t kind;
     u32_t val;
-  };
+  } cnt;
   lex_loc_t loc;
 };
 
