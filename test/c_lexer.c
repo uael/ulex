@@ -33,10 +33,11 @@ CUTEST_DATA {
 
 CUTEST_SETUP {
   (void) self;
-};
+}
+
 CUTEST_TEARDOWN {
   (void) self;
-};
+}
 
 i32_t
 main(void) {

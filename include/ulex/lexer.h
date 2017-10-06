@@ -41,9 +41,9 @@ enum lex_lexer_ev {
 typedef enum lex_lexer_ev lex_lexer_ev_t;
 typedef struct lex_lexer lex_lexer_t;
 
-DEQ32_DEFINE(lex_toks, lex_tok_t, addrcmp);
-VEC32_DEFINE(lex_vals, lex_val_t, addrcmp);
-DEQ16_DEFINE(lex_srcs, lex_src_t, addrcmp);
+DEQ32_DEFINE(lex_toks, lex_tok_t, addrcmp)
+VEC32_DEFINE(lex_vals, lex_val_t, addrcmp)
+DEQ16_DEFINE(lex_srcs, lex_src_t, addrcmp)
 
 struct lex_lexer {
   bool_t root;
@@ -55,7 +55,7 @@ struct lex_lexer {
   lex_vals_t vals;
 };
 
-OBSERVABLE_DEFINE(lex_lexer, lex_lexer_t, lex_lexer_ev_t);
+OBSERVABLE_DEFINE(lex_lexer, lex_lexer_t, lex_lexer_ev_t)
 
 __api__ void
 lex_lexer_ctor(lex_lexer_t *self);
